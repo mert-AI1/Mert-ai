@@ -8,103 +8,232 @@
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
-      min-height: 100vh;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #050816, #111827, #1e1b4b);
+      background: #0b0f17;
       color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
+      height: 100vh;
+      overflow: hidden;
     }
 
     .app {
-      width: 100%;
-      max-width: 700px;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 25px;
-      padding: 25px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      max-width: 900px;
+      margin: auto;
+      background: #111722;
     }
 
-    h1 {
-      text-align: center;
-      margin: 0;
-      font-size: 38px;
+    /* ÜST BAR */
+    .header {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      border-bottom: 1px solid #252c39;
+      background: #111722;
     }
 
-    .subtitle {
-      text-align: center;
-      color: #a5b4fc;
-      margin: 8px 0 25px;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 150px;
-      resize: vertical;
-      border: none;
-      outline: none;
-      border-radius: 18px;
-      padding: 18px;
-      font-size: 17px;
-      background: #020617;
-      color: white;
-      border: 1px solid #334155;
-    }
-
-    .buttons {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+    .logo {
+      display: flex;
+      align-items: center;
       gap: 10px;
-      margin-top: 12px;
     }
 
-    button {
-      border: none;
-      border-radius: 14px;
-      padding: 14px 8px;
-      font-size: 15px;
-      cursor: pointer;
-      background: #312e81;
-      color: white;
-    }
-
-    button:hover {
-      background: #4338ca;
-    }
-
-    .send {
-      margin-top: 12px;
-      width: 100%;
-      background: linear-gradient(90deg, #4f46e5, #7c3aed);
-      font-size: 18px;
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #6d5dfc, #00c6ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
       font-weight: bold;
     }
 
-    #answer {
-      margin-top: 20px;
-      padding: 18px;
-      border-radius: 18px;
-      background: #020617;
-      border: 1px solid #334155;
-      min-height: 70px;
-      white-space: pre-wrap;
-      line-height: 1.6;
+    .logo-text {
+      font-size: 19px;
+      font-weight: bold;
     }
 
-    @media (max-width: 500px) {
-      .buttons {
-        grid-template-columns: repeat(2, 1fr);
+    .status {
+      font-size: 12px;
+      color: #7d8798;
+      margin-top: 3px;
+    }
+
+    .online {
+      color: #35d07f;
+    }
+
+    /* MESAJLAR */
+    .messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 25px 16px 110px;
+    }
+
+    .welcome {
+      text-align: center;
+      margin-top: 15vh;
+      color: #9aa4b5;
+    }
+
+    .welcome h1 {
+      color: white;
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .welcome p {
+      font-size: 14px;
+    }
+
+    .message {
+      display: flex;
+      margin-bottom: 18px;
+    }
+
+    .message.user {
+      justify-content: flex-end;
+    }
+
+    .message.ai {
+      justify-content: flex-start;
+    }
+
+    .bubble {
+      max-width: 80%;
+      padding: 13px 16px;
+      border-radius: 18px;
+      line-height: 1.5;
+      font-size: 15px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .user .bubble {
+      background: linear-gradient(135deg, #6758f5, #4b7bec);
+      border-bottom-right-radius: 5px;
+    }
+
+    .ai .bubble {
+      background: #1b2230;
+      border: 1px solid #293142;
+      border-bottom-left-radius: 5px;
+    }
+
+    /* YAZIYOR */
+    .typing {
+      display: none;
+      margin-bottom: 15px;
+    }
+
+    .typing .bubble {
+      color: #8e99aa;
+    }
+
+    /* ALT KUTU */
+    .input-area {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(900px, 100%);
+      padding: 12px 14px 16px;
+      background: linear-gradient(
+        to top,
+        #111722 75%,
+        transparent
+      );
+    }
+
+    .input-box {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      background: #1a2130;
+      border: 1px solid #30394a;
+      border-radius: 20px;
+      padding: 8px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.3);
+    }
+
+    textarea {
+      flex: 1;
+      resize: none;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: white;
+      font-size: 15px;
+      padding: 9px 5px;
+      max-height: 120px;
+      min-height: 40px;
+      font-family: inherit;
+    }
+
+    textarea::placeholder {
+      color: #788396;
+    }
+
+    .icon-btn,
+    .send-btn {
+      width: 42px;
+      height: 42px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+      flex-shrink: 0;
+    }
+
+    .icon-btn {
+      background: #252d3c;
+      color: #c4ccda;
+    }
+
+    .send-btn {
+      background: linear-gradient(135deg, #6d5dfc, #00a8ff);
+      color: white;
+      font-size: 18px;
+    }
+
+    .icon-btn:active,
+    .send-btn:active {
+      transform: scale(.94);
+    }
+
+    .tools {
+      display: flex;
+      gap: 6px;
+    }
+
+    @media (max-width: 600px) {
+      .header {
+        height: 62px;
       }
 
-      h1 {
-        font-size: 30px;
+      .messages {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .bubble {
+        max-width: 88%;
+      }
+
+      .welcome h1 {
+        font-size: 26px;
       }
     }
   </style>
@@ -112,118 +241,170 @@
 
 <body>
 
-  <div class="app">
+<div class="app">
 
-    <h1>✦ MERT AI</h1>
+  <header class="header">
+    <div class="logo">
+      <div class="logo-icon">✦</div>
 
-    <div class="subtitle">
-      Yapay zeka asistanın
+      <div>
+        <div class="logo-text">MERT AI</div>
+        <div class="status">
+          <span class="online">●</span> Çevrimiçi
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="messages" id="messages">
+
+    <div class="welcome" id="welcome">
+      <h1>Merhaba 👋</h1>
+      <p>Ben MERT AI. Sana nasıl yardımcı olabilirim?</p>
     </div>
 
-    <textarea id="message" placeholder="MERT AI'ya bir şey sor..."></textarea>
+  </main>
 
-    <div class="buttons">
-      <button onclick="startVoice()">🎤 Ses</button>
-      <button onclick="choosePhoto()">📷 Fotoğraf</button>
-      <button onclick="chooseFile()">📎 Dosya</button>
-      <button onclick="clearChat()">🗑️ Temizle</button>
+  <div class="typing" id="typing">
+    <div class="bubble">MERT AI yazıyor...</div>
+  </div>
+
+  <div class="input-area">
+
+    <div class="input-box">
+
+      <div class="tools">
+        <button class="icon-btn" onclick="alert('Dosya özelliği yakında!')">📎</button>
+      </div>
+
+      <textarea
+        id="messageInput"
+        placeholder="MERT AI'ya mesaj yaz..."
+        rows="1"
+      ></textarea>
+
+      <button
+        class="icon-btn"
+        onclick="alert('Sesli konuşma yakında!')"
+      >🎤</button>
+
+      <button
+        class="send-btn"
+        onclick="sendMessage()"
+      >➤</button>
+
     </div>
-
-    <button class="send" onclick="sendMessage()">
-      ➤ Gönder
-    </button>
-
-    <div id="answer">
-      Merhaba! Ben MERT AI. 🤖
-    </div>
-
-    <input type="file" id="photoInput" accept="image/*" hidden>
-    <input type="file" id="fileInput" hidden>
 
   </div>
 
-  <script>
+</div>
 
-    const WORKER_URL =
+<script>
+
+const WORKER_URL =
   "https://mert-ai.j28jyc9rjt.workers.dev";
-   
 
-    async function sendMessage() {
+const input = document.getElementById("messageInput");
+const messages = document.getElementById("messages");
+const welcome = document.getElementById("welcome");
+const typing = document.getElementById("typing");
 
-      const messageBox = document.getElementById("message");
-      const answerBox = document.getElementById("answer");
+input.addEventListener("keydown", function(event) {
 
-      const message = messageBox.value.trim();
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    sendMessage();
+  }
 
-      if (!message) {
-        answerBox.textContent = "Önce bir mesaj yaz. 🙂";
-        return;
-      }
+});
 
-      answerBox.textContent = "MERT AI düşünüyor... 🤔";
+input.addEventListener("input", function() {
 
-      try {
+  this.style.height = "auto";
+  this.style.height = Math.min(this.scrollHeight, 120) + "px";
 
-        const response = await fetch(WORKER_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            message: message
-          })
-        });
+});
 
-        const data = await response.json();
+function addMessage(text, type) {
 
-        if (data.answer) {
-          answerBox.textContent = data.answer;
-        } else {
-          answerBox.textContent =
-            "Bir hata oluştu: " + (data.error || "Bilinmeyen hata");
-        }
+  welcome.style.display = "none";
 
-      } catch (error) {
+  const message = document.createElement("div");
+  message.className = "message " + type;
 
-        answerBox.textContent =
-          "MERT AI'ya bağlanılamadı. Worker adresini kontrol et.";
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+  bubble.textContent = text;
 
-      }
+  message.appendChild(bubble);
+  messages.appendChild(message);
+
+  messages.scrollTop = messages.scrollHeight;
+}
+
+async function sendMessage() {
+
+  const message = input.value.trim();
+
+  if (!message) return;
+
+  addMessage(message, "user");
+
+  input.value = "";
+  input.style.height = "auto";
+
+  typing.style.display = "block";
+  messages.appendChild(typing);
+
+  messages.scrollTop = messages.scrollHeight;
+
+  try {
+
+    const response = await fetch(WORKER_URL, {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        message: message
+      })
+
+    });
+
+    const data = await response.json();
+
+    typing.style.display = "none";
+
+    if (data.answer) {
+
+      addMessage(data.answer, "ai");
+
+    } else {
+
+      addMessage(
+        "Üzgünüm, şu anda cevap oluşturamadım.",
+        "ai"
+      );
+
     }
 
-    function clearChat() {
-      document.getElementById("message").value = "";
-      document.getElementById("answer").textContent =
-        "Merhaba! Ben MERT AI. 🤖";
-    }
+  } catch (error) {
 
-    function choosePhoto() {
-      document.getElementById("photoInput").click();
-    }
+    typing.style.display = "none";
 
-    function chooseFile() {
-      document.getElementById("fileInput").click();
-    }
+    addMessage(
+      "MERT AI'ya bağlanırken bir sorun oluştu.",
+      "ai"
+    );
 
-    function startVoice() {
+  }
 
-      if (!("webkitSpeechRecognition" in window)) {
-        alert("Bu tarayıcı sesli girişi desteklemiyor.");
-        return;
-      }
+}
 
-      const recognition = new webkitSpeechRecognition();
-
-      recognition.lang = "tr-TR";
-      recognition.start();
-
-      recognition.onresult = function(event) {
-        document.getElementById("message").value =
-          event.results[0][0].transcript;
-      };
-    }
-
-  </script>
+</script>
 
 </body>
 </html>
