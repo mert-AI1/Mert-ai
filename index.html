@@ -21,7 +21,30 @@
 
 #splash .robot {
   font-size: 70px;
-  <div class="electric-logo">MERT AI</div>
+  <div class="electric-logo">MERT AI</div> 
+  .electric-logo {
+  font-size: 52px;
+  font-weight: 900;
+  letter-spacing: 5px;
+  color: #fff;
+  text-shadow:
+    0 0 5px #fff,
+    0 0 15px #00eaff,
+    0 0 30px #00eaff,
+    0 0 60px #0077ff;
+  animation: electric 0.8s infinite alternate;
+}
+
+@keyframes electric {
+  from {
+    filter: brightness(1);
+    transform: scale(1);
+  }
+  to {
+    filter: brightness(1.8);
+    transform: scale(1.03);
+  }
+}
 }
 
 #splash h1 {
