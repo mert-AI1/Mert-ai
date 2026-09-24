@@ -10,106 +10,276 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
   margin: 0;
-  background: #050505;
+  width: 100%;
+  height: 100%;
+  background: #000;
   color: white;
   font-family: Arial, sans-serif;
-  height: 100vh;
 }
 
+/* GİRİŞ EKRANI */
+#splash {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: splashOut 1s ease 2.8s forwards;
+}
+
+#splash .electric-logo {
+  font-size: 52px;
+  font-weight: 900;
+  letter-spacing: 6px;
+  text-shadow:
+    0 0 5px #fff,
+    0 0 15px #fff,
+    0 0 30px #888;
+  animation: logoPulse 1s infinite alternate;
+}
+
+#splash p {
+  margin-top: 18px;
+  color: #aaa;
+  font-size: 15px;
+}
+
+@keyframes logoPulse {
+  from {
+    transform: scale(.95);
+    opacity: .75;
+  }
+  to {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+@keyframes splashOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+/* ANA ALAN */
 .app {
+  width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
+/* ÜST BAR */
 .header {
-  padding: 18px;
-  text-align: center;
-  font-size: 25px;
+  height: 65px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #202020;
+  background: #050505;
+  font-size: 23px;
   font-weight: bold;
-  border-bottom: 1px solid #222;
+  letter-spacing: 2px;
 }
 
-.messages {
+/* SOHBET */
+.chat {
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
+  padding: 25px 15px 30px;
+  scroll-behavior: smooth;
+}
+
+.welcome {
+  max-width: 850px;
+  margin: 70px auto;
+  text-align: center;
+}
+
+.welcome h1 {
+  font-size: 38px;
+  margin-bottom: 10px;
+}
+
+.welcome p {
+  color: #888;
+}
+
+.message-row {
+  width: 100%;
+  display: flex;
+  margin: 12px 0;
+}
+
+.message-row.user {
+  justify-content: flex-end;
+}
+
+.message-row.ai {
+  justify-content: flex-start;
 }
 
 .message {
-  max-width: 800px;
-  margin: 0 auto 15px;
-  padding: 14px 16px;
-  border-radius: 14px;
+  max-width: min(760px, 85%);
+  padding: 14px 17px;
+  border-radius: 18px;
+  line-height: 1.55;
   white-space: pre-wrap;
-  line-height: 1.5;
+  word-wrap: break-word;
 }
 
-.user {
-  background: #202020;
+.user .message {
+  background: #1f1f1f;
+  border: 1px solid #303030;
+  border-bottom-right-radius: 5px;
 }
 
-.ai {
-  background: #101010;
-  border: 1px solid #222;
+.ai .message {
+  background: #0c0c0c;
+  border: 1px solid #242424;
+  border-bottom-left-radius: 5px;
 }
 
+/* ALT GİRİŞ */
 .input-area {
+  width: 100%;
+  padding: 12px 15px 18px;
+  background: #000;
+  border-top: 1px solid #181818;
+}
+
+.input-box {
+  max-width: 850px;
+  margin: auto;
   display: flex;
-  gap: 10px;
-  padding: 12px;
-  border-top: 1px solid #222;
+  gap: 9px;
+  background: #111;
+  border: 1px solid #303030;
+  border-radius: 18px;
+  padding: 7px;
 }
 
 #messageInput {
   flex: 1;
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid #333;
-  background: #111;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
   color: white;
+  padding: 12px;
   font-size: 16px;
-  outline: none;
+}
+
+#messageInput::placeholder {
+  color: #666;
 }
 
 #sendButton {
-  padding: 0 20px;
-  border: none;
-  border-radius: 12px;
+  border: 0;
+  border-radius: 13px;
   background: white;
   color: black;
+  padding: 0 20px;
   font-weight: bold;
+  cursor: pointer;
+}
+
+#sendButton:disabled {
+  opacity: .5;
+}
+
+/* TELEFON */
+@media (max-width: 600px) {
+
+  .header {
+    height: 58px;
+    font-size: 20px;
+  }
+
+  .chat {
+    padding: 15px 10px 20px;
+  }
+
+  .welcome {
+    margin: 60px auto;
+  }
+
+  .welcome h1 {
+    font-size: 30px;
+  }
+
+  .message {
+    max-width: 88%;
+  }
+
+  .input-area {
+    padding: 8px 8px 12px;
+  }
+
+  .input-box {
+    border-radius: 15px;
+  }
+
+  #sendButton {
+    padding: 0 15px;
+  }
+
+  #splash .electric-logo {
+    font-size: 40px;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- GİRİŞ ANİMASYONU -->
+<div id="splash">
+  <div class="electric-logo">MERT AI</div>
+  <p>Yapay zekâ asistanın hazırlanıyor...</p>
+</div>
+
+<!-- ANA UYGULAMA -->
 <div class="app">
 
   <div class="header">
     🤖 MERT AI
   </div>
 
-  <div id="messages" class="messages">
-    <div class="message ai">
-      Merhaba! Ben MERT AI 🤖<br>
-      Sana nasıl yardımcı olabilirim?
+  <div id="chat" class="chat">
+
+    <div id="welcome" class="welcome">
+      <h1>MERT AI</h1>
+      <p>Merhaba 👋 Sana nasıl yardımcı olabilirim?</p>
     </div>
+
   </div>
 
   <div class="input-area">
-    <input
-      id="messageInput"
-      type="text"
-      placeholder="MERT AI'ya bir şey sor..."
-    >
 
-    <button id="sendButton" onclick="sendMessage()">
-      Gönder
-    </button>
+    <div class="input-box">
+
+      <input
+        id="messageInput"
+        type="text"
+        placeholder="MERT AI'ya bir şey sor..."
+        autocomplete="off"
+      >
+
+      <button id="sendButton">
+        Gönder
+      </button>
+
+    </div>
+
   </div>
 
 </div>
@@ -118,32 +288,56 @@ body {
 const WORKER_URL =
   "https://mert-ai.j28jyc9rjt.workers.dev";
 
-async function sendMessage() {
+const input =
+  document.getElementById("messageInput");
 
-  const input =
-    document.getElementById("messageInput");
+const button =
+  document.getElementById("sendButton");
 
-  const messages =
-    document.getElementById("messages");
+const chat =
+  document.getElementById("chat");
 
-  const button =
-    document.getElementById("sendButton");
+const welcome =
+  document.getElementById("welcome");
 
-  const message =
-    input.value.trim();
+function addMessage(text, type) {
 
-  if (!message) return;
+  if (welcome) {
+    welcome.remove();
+  }
 
-  const userMessage =
+  const row =
     document.createElement("div");
 
-  userMessage.className =
-    "message user";
+  row.className =
+    "message-row " + type;
 
-  userMessage.textContent =
-    message;
+  const message =
+    document.createElement("div");
 
-  messages.appendChild(userMessage);
+  message.className = "message";
+
+  message.textContent = text;
+
+  row.appendChild(message);
+  chat.appendChild(row);
+
+  chat.scrollTop =
+    chat.scrollHeight;
+
+  return message;
+}
+
+async function sendMessage() {
+
+  const text =
+    input.value.trim();
+
+  if (!text || button.disabled) {
+    return;
+  }
+
+  addMessage(text, "user");
 
   input.value = "";
 
@@ -151,18 +345,7 @@ async function sendMessage() {
   button.textContent = "⏳";
 
   const aiMessage =
-    document.createElement("div");
-
-  aiMessage.className =
-    "message ai";
-
-  aiMessage.textContent =
-    "Düşünüyorum...";
-
-  messages.appendChild(aiMessage);
-
-  messages.scrollTop =
-    messages.scrollHeight;
+    addMessage("Düşünüyorum...", "ai");
 
   try {
 
@@ -175,40 +358,54 @@ async function sendMessage() {
         },
 
         body: JSON.stringify({
-          message: message
+          message: text
         })
       });
 
     const data =
       await response.json();
 
-    aiMessage.textContent =
-      data.answer ||
-      "Cevap alınamadı.";
+    if (data.answer) {
+
+      aiMessage.textContent =
+        data.answer;
+
+    } else {
+
+      aiMessage.textContent =
+        "Üzgünüm, cevap oluşturulamadı.";
+
+    }
 
   } catch (error) {
 
     aiMessage.textContent =
-      "Bağlantı hatası oluştu.";
+      "Bağlantı hatası oluştu. Lütfen tekrar dene.";
 
   }
 
   button.disabled = false;
   button.textContent = "Gönder";
 
-  messages.scrollTop =
-    messages.scrollHeight;
+  chat.scrollTop =
+    chat.scrollHeight;
 }
 
-document
-  .getElementById("messageInput")
-  .addEventListener("keydown", function(event) {
+button.addEventListener(
+  "click",
+  sendMessage
+);
+
+input.addEventListener(
+  "keydown",
+  function(event) {
 
     if (event.key === "Enter") {
       sendMessage();
     }
 
-  });
+  }
+);
 </script>
 
 </body>
