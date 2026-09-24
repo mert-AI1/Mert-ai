@@ -478,4 +478,11 @@ async function sendMessage() {
 </script>
 
 </body>
+<script>
+let chats = JSON.parse(localStorage.getItem("mertAI_chats") || "[]");
+
+function saveChats() {
+  localStorage.setItem("mertAI_chats", JSON.stringify(chats));
+}
+</script>
 </html>
