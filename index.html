@@ -8,122 +8,103 @@
   <style>
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     body {
+      margin: 0;
       min-height: 100vh;
       font-family: Arial, sans-serif;
-      background: #080b16;
+      background: linear-gradient(135deg, #050816, #111827, #1e1b4b);
       color: white;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
+      padding: 20px;
     }
 
-    .background {
-      position: fixed;
+    .app {
       width: 100%;
-      height: 100%;
-      background:
-        radial-gradient(circle at 20% 20%, #3155ff55, transparent 30%),
-        radial-gradient(circle at 80% 80%, #9b27ff44, transparent 30%);
-      z-index: -1;
+      max-width: 700px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 25px;
+      padding: 25px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
     }
 
-    .container {
-      width: 92%;
-      max-width: 850px;
+    h1 {
       text-align: center;
-    }
-
-    .logo {
-      font-size: 48px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
-      background: linear-gradient(90deg, #6ea8ff, #c77dff);
-      -webkit-background-clip: text;
-      color: transparent;
+      margin: 0;
+      font-size: 38px;
     }
 
     .subtitle {
-      color: #aeb6d3;
-      margin-bottom: 35px;
-      font-size: 17px;
-    }
-
-    .chat-box {
-      background: #111629cc;
-      border: 1px solid #ffffff18;
-      border-radius: 25px;
-      padding: 15px;
-      box-shadow: 0 20px 70px #00000066;
-      backdrop-filter: blur(15px);
+      text-align: center;
+      color: #a5b4fc;
+      margin: 8px 0 25px;
     }
 
     textarea {
       width: 100%;
-      height: 130px;
+      min-height: 150px;
+      resize: vertical;
       border: none;
       outline: none;
-      resize: none;
-      background: transparent;
-      color: white;
+      border-radius: 18px;
+      padding: 18px;
       font-size: 17px;
-      padding: 10px;
-    }
-
-    textarea::placeholder {
-      color: #747c99;
+      background: #020617;
+      color: white;
+      border: 1px solid #334155;
     }
 
     .buttons {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       gap: 10px;
-      margin-top: 10px;
+      margin-top: 12px;
     }
 
     button {
       border: none;
-      cursor: pointer;
-      border-radius: 15px;
-      padding: 13px 16px;
-      color: white;
-      background: #1d2440;
+      border-radius: 14px;
+      padding: 14px 8px;
       font-size: 15px;
+      cursor: pointer;
+      background: #312e81;
+      color: white;
     }
 
     button:hover {
-      background: #2b365e;
+      background: #4338ca;
     }
 
     .send {
-      margin-left: auto;
-      background: linear-gradient(135deg, #4776ff, #9b4dff);
+      margin-top: 12px;
+      width: 100%;
+      background: linear-gradient(90deg, #4f46e5, #7c3aed);
+      font-size: 18px;
       font-weight: bold;
     }
 
-    .welcome {
-      margin-top: 25px;
-      color: #8e97b7;
-      font-size: 14px;
+    #answer {
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #020617;
+      border: 1px solid #334155;
+      min-height: 70px;
+      white-space: pre-wrap;
+      line-height: 1.6;
     }
 
-    @media (max-width: 600px) {
-      .logo {
-        font-size: 38px;
-      }
-
+    @media (max-width: 500px) {
       .buttons {
-        flex-wrap: wrap;
+        grid-template-columns: repeat(2, 1fr);
       }
 
-      .send {
-        margin-left: 0;
-        width: 100%;
+      h1 {
+        font-size: 30px;
       }
     }
   </style>
@@ -131,36 +112,117 @@
 
 <body>
 
-  <div class="background"></div>
+  <div class="app">
 
-  <main class="container">
+    <h1>✦ MERT AI</h1>
 
-    <div class="logo">✦ MERT AI</div>
-
-    <p class="subtitle">
-      Merhaba! Ben MERT AI. Sana nasıl yardımcı olabilirim?
-    </p>
-
-    <div class="chat-box">
-
-      <textarea
-        placeholder="MERT AI'ya bir şey sor..."
-      ></textarea>
-
-      <div class="buttons">
-        <button>🎤 Ses</button>
-        <button>📷 Fotoğraf</button>
-        <button>📎 Dosya</button>
-        <button class="send">➤ Gönder</button>
-      </div>
-
+    <div class="subtitle">
+      Yapay zeka asistanın
     </div>
 
-    <p class="welcome">
-      MERT AI • Senin yapay zekâ asistanın
-    </p>
+    <textarea id="message" placeholder="MERT AI'ya bir şey sor..."></textarea>
 
-  </main>
+    <div class="buttons">
+      <button onclick="startVoice()">🎤 Ses</button>
+      <button onclick="choosePhoto()">📷 Fotoğraf</button>
+      <button onclick="chooseFile()">📎 Dosya</button>
+      <button onclick="clearChat()">🗑️ Temizle</button>
+    </div>
+
+    <button class="send" onclick="sendMessage()">
+      ➤ Gönder
+    </button>
+
+    <div id="answer">
+      Merhaba! Ben MERT AI. 🤖
+    </div>
+
+    <input type="file" id="photoInput" accept="image/*" hidden>
+    <input type="file" id="fileInput" hidden>
+
+  </div>
+
+  <script>
+
+    const WORKER_URL =
+      "https://shy-water-3f6c.j28jyc9rjt.workers.dev";
+
+    async function sendMessage() {
+
+      const messageBox = document.getElementById("message");
+      const answerBox = document.getElementById("answer");
+
+      const message = messageBox.value.trim();
+
+      if (!message) {
+        answerBox.textContent = "Önce bir mesaj yaz. 🙂";
+        return;
+      }
+
+      answerBox.textContent = "MERT AI düşünüyor... 🤔";
+
+      try {
+
+        const response = await fetch(WORKER_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: message
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.answer) {
+          answerBox.textContent = data.answer;
+        } else {
+          answerBox.textContent =
+            "Bir hata oluştu: " + (data.error || "Bilinmeyen hata");
+        }
+
+      } catch (error) {
+
+        answerBox.textContent =
+          "MERT AI'ya bağlanılamadı. Worker adresini kontrol et.";
+
+      }
+    }
+
+    function clearChat() {
+      document.getElementById("message").value = "";
+      document.getElementById("answer").textContent =
+        "Merhaba! Ben MERT AI. 🤖";
+    }
+
+    function choosePhoto() {
+      document.getElementById("photoInput").click();
+    }
+
+    function chooseFile() {
+      document.getElementById("fileInput").click();
+    }
+
+    function startVoice() {
+
+      if (!("webkitSpeechRecognition" in window)) {
+        alert("Bu tarayıcı sesli girişi desteklemiyor.");
+        return;
+      }
+
+      const recognition = new webkitSpeechRecognition();
+
+      recognition.lang = "tr-TR";
+      recognition.start();
+
+      recognition.onresult = function(event) {
+        document.getElementById("message").value =
+          event.results[0][0].transcript;
+      };
+    }
+
+  </script>
 
 </body>
 </html>
