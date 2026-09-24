@@ -1,372 +1,232 @@
-<!-- MERT AI Giriş Animasyonu -->
-<div id="splash">
-  <div class="electric-logo">MERT AI</div>
-  <h1>MERT AI</h1>
-  <p>Yapay zekâ asistanın hazırlanıyor...</p>
-</div>
-
-<style>
-#splash {
-  position: fixed;
-  inset: 0;
-  background: #050505;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  animation: splashOut 1s ease 2.5s forwards;
-}
-
-#splash .robot {
-  font-size: 70px;
-  <div class="electric-logo">MERT AI</div> 
-  .electric-logo {
-  font-size: 52px;
-  font-weight: 900;
-  letter-spacing: 5px;
-  color: #fff;
-  text-shadow:
-    0 0 5px #fff,
-    0 0 15px #00eaff,
-    0 0 30px #00eaff,
-    0 0 60px #0077ff;
-  animation: electric 0.8s infinite alternate;
-}
-
-@keyframes electric {
-  from {
-    filter: brightness(1);
-    transform: scale(1);
-  }
-  to {
-    filter: brightness(1.8);
-    transform: scale(1.03);
-  }
-}
-}
-
-#splash h1 {
-  font-size: 42px;
-  margin: 15px 0 5px;
-  letter-spacing: 4px;
-}
-
-#splash p {
-  opacity: .7;
-}
-
-@keyframes robotPulse {
-  from { transform: scale(.9); }
-  to { transform: scale(1.1); }
-}
-
-@keyframes splashOut {
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-</style>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MERT AI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MERT AI</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #0b0f17;
-      color: white;
-      height: 100vh;
-      overflow: hidden;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #000;
+  color: white;
+  height: 100vh;
+  overflow: hidden;
+}
 
-    .app {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      max-width: 900px;
-      margin: auto;
-      background: #111722;
-    }
+.app {
+  display: flex;
+  height: 100vh;
+}
 
-    /* ÜST BAR */
-    .header {
-      height: 70px;
-      display: flex;
-      align-items: center;
-      padding: 0 18px;
-      border-bottom: 1px solid #252c39;
-      background: #111722;
-    }
+.sidebar {
+  width: 260px;
+  background: #080808;
+  border-right: 1px solid #222;
+  padding: 15px;
+  overflow-y: auto;
+}
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+.logo {
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 18px;
+  letter-spacing: 2px;
+}
 
-    .logo-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 13px;
-      background: linear-gradient(135deg, #6d5dfc, #00c6ff);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 21px;
-      font-weight: bold;
-    }
+.new-chat {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #333;
+  border-radius: 12px;
+  background: #151515;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
 
-    .logo-text {
-      font-size: 19px;
-      font-weight: bold;
-    }
+.new-chat:hover {
+  background: #222;
+}
 
-    .status {
-      font-size: 12px;
-      color: #7d8798;
-      margin-top: 3px;
-    }
+.chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
-    .online {
-      color: #35d07f;
-    }
+.chat-item {
+  padding: 11px;
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
 
-    /* MESAJLAR */
-    .messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: 25px 16px 110px;
-    }
+.chat-item:hover {
+  background: #1b1b1b;
+}
 
-    .welcome {
-      text-align: center;
-      margin-top: 15vh;
-      color: #9aa4b5;
-    }
+.chat-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
-    .welcome h1 {
-      color: white;
-      font-size: 30px;
-      margin-bottom: 10px;
-    }
+.delete-chat {
+  border: none;
+  background: transparent;
+  color: #888;
+  cursor: pointer;
+}
 
-    .welcome p {
-      font-size: 14px;
-    }
+.delete-chat:hover {
+  color: red;
+}
 
-    .message {
-      display: flex;
-      margin-bottom: 18px;
-    }
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
 
-    .message.user {
-      justify-content: flex-end;
-    }
+.header {
+  padding: 18px;
+  border-bottom: 1px solid #222;
+  font-size: 22px;
+  font-weight: bold;
+}
 
-    .message.ai {
-      justify-content: flex-start;
-    }
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
 
-    .bubble {
-      max-width: 80%;
-      padding: 13px 16px;
-      border-radius: 18px;
-      line-height: 1.5;
-      font-size: 15px;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-    }
+.message {
+  max-width: 800px;
+  margin: 0 auto 15px;
+  padding: 14px 16px;
+  border-radius: 15px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
 
-    .user .bubble {
-      background: linear-gradient(135deg, #6758f5, #4b7bec);
-      border-bottom-right-radius: 5px;
-    }
+.user {
+  background: #202020;
+}
 
-    .ai .bubble {
-      background: #1b2230;
-      border: 1px solid #293142;
-      border-bottom-left-radius: 5px;
-    }
+.ai {
+  background: #0d0d0d;
+  border: 1px solid #222;
+}
 
-    /* YAZIYOR */
-    .typing {
-      display: none;
-      margin-bottom: 15px;
-    }
+.input-area {
+  padding: 15px;
+  border-top: 1px solid #222;
+  display: flex;
+  gap: 10px;
+}
 
-    .typing .bubble {
-      color: #8e99aa;
-    }
+#messageInput {
+  flex: 1;
+  background: #111;
+  color: white;
+  border: 1px solid #333;
+  border-radius: 14px;
+  padding: 14px;
+  font-size: 16px;
+  outline: none;
+}
 
-    /* ALT KUTU */
-    .input-area {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: min(900px, 100%);
-      padding: 12px 14px 16px;
-      background: linear-gradient(
-        to top,
-        #111722 75%,
-        transparent
-      );
-    }
+#sendButton {
+  background: white;
+  color: black;
+  border: none;
+  border-radius: 14px;
+  padding: 0 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
 
-    .input-box {
-      display: flex;
-      align-items: flex-end;
-      gap: 8px;
-      background: #1a2130;
-      border: 1px solid #30394a;
-      border-radius: 20px;
-      padding: 8px;
-      box-shadow: 0 8px 30px rgba(0,0,0,.3);
-    }
+#sendButton:disabled {
+  opacity: .5;
+}
 
-    textarea {
-      flex: 1;
-      resize: none;
-      border: none;
-      outline: none;
-      background: transparent;
-      color: white;
-      font-size: 15px;
-      padding: 9px 5px;
-      max-height: 120px;
-      min-height: 40px;
-      font-family: inherit;
-    }
+.empty {
+  text-align: center;
+  color: #777;
+  margin-top: 80px;
+}
 
-    textarea::placeholder {
-      color: #788396;
-    }
+@media (max-width: 700px) {
+  .sidebar {
+    width: 190px;
+    padding: 10px;
+  }
 
-    .icon-btn,
-    .send-btn {
-      width: 42px;
-      height: 42px;
-      border: none;
-      border-radius: 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 19px;
-      flex-shrink: 0;
-    }
+  .logo {
+    font-size: 20px;
+  }
 
-    .icon-btn {
-      background: #252d3c;
-      color: #c4ccda;
-    }
+  .messages {
+    padding: 12px;
+  }
 
-    .send-btn {
-      background: linear-gradient(135deg, #6d5dfc, #00a8ff);
-      color: white;
-      font-size: 18px;
-    }
-
-    .icon-btn:active,
-    .send-btn:active {
-      transform: scale(.94);
-    }
-
-    .tools {
-      display: flex;
-      gap: 6px;
-    }
-
-    @media (max-width: 600px) {
-      .header {
-        height: 62px;
-      }
-
-      .messages {
-        padding-left: 12px;
-        padding-right: 12px;
-      }
-
-      .bubble {
-        max-width: 88%;
-      }
-
-      .welcome h1 {
-        font-size: 26px;
-      }
-    }
-  </style>
+  .input-area {
+    padding: 10px;
+  }
+}
+</style>
 </head>
 
 <body>
 
 <div class="app">
 
-  <header class="header">
-    <div class="logo">
-      <div class="logo-icon">✦</div>
+  <aside class="sidebar">
+    <div class="logo">MERT AI</div>
 
-      <div>
-        <div class="logo-text">MERT AI</div>
-        <div class="status">
-          <span class="online">●</span> Çevrimiçi
-        </div>
-      </div>
+    <button class="new-chat" onclick="newChat()">
+      ➕ Yeni Sohbet
+    </button>
+
+    <div id="chatList" class="chat-list"></div>
+  </aside>
+
+  <main class="main">
+
+    <div class="header">
+      🤖 MERT AI
     </div>
-  </header>
 
-  <main class="messages" id="messages">
+    <div id="messages" class="messages"></div>
 
-    <div class="welcome" id="welcome">
-      <h1>Merhaba 👋</h1>
-      <p>Ben MERT AI. Sana nasıl yardımcı olabilirim?</p>
+    <div class="input-area">
+      <input
+        id="messageInput"
+        type="text"
+        placeholder="MERT AI'ya bir şey sor..."
+        autocomplete="off"
+      >
+
+      <button id="sendButton" onclick="sendMessage()">
+        Gönder
+      </button>
     </div>
 
   </main>
-
-  <div class="typing" id="typing">
-    <div class="bubble">MERT AI yazıyor...</div>
-  </div>
-
-  <div class="input-area">
-
-    <div class="input-box">
-
-      <div class="tools">
-        <button class="icon-btn" onclick="alert('Dosya özelliği yakında!')">📎</button>
-      </div>
-
-      <textarea
-        id="messageInput"
-        placeholder="MERT AI'ya mesaj yaz..."
-        rows="1"
-      ></textarea>
-
-      <button
-        class="icon-btn"
-        onclick="alert('Sesli konuşma yakında!')"
-      >🎤</button>
-
-      <button
-        class="send-btn"
-        onclick="sendMessage()"
-      >➤</button>
-
-    </div>
-
-  </div>
 
 </div>
 
@@ -375,134 +235,314 @@
 const WORKER_URL =
   "https://mert-ai.j28jyc9rjt.workers.dev";
 
-const input = document.getElementById("messageInput");
-const messages = document.getElementById("messages");
-const welcome = document.getElementById("welcome");
-const typing = document.getElementById("typing");
+let chats =
+  JSON.parse(localStorage.getItem("mertAI_chats") || "[]");
 
-input.addEventListener("keydown", function(event) {
+let currentChatId =
+  localStorage.getItem("mertAI_currentChat");
 
-  if (event.key === "Enter" && !event.shiftKey) {
-    event.preventDefault();
-    sendMessage();
+function saveChats() {
+  localStorage.setItem(
+    "mertAI_chats",
+    JSON.stringify(chats)
+  );
+}
+
+function createFirstChat() {
+
+  if (chats.length === 0) {
+
+    const chat = {
+      id: Date.now(),
+      title: "Yeni Sohbet",
+      messages: []
+    };
+
+    chats.push(chat);
+    currentChatId = chat.id;
+
+    saveChats();
+
+  } else if (!currentChatId) {
+
+    currentChatId = chats[0].id;
+
+    localStorage.setItem(
+      "mertAI_currentChat",
+      currentChatId
+    );
+  }
+}
+
+function getCurrentChat() {
+
+  return chats.find(
+    chat => String(chat.id) === String(currentChatId)
+  );
+}
+
+function newChat() {
+
+  const chat = {
+    id: Date.now(),
+    title: "Yeni Sohbet",
+    messages: []
+  };
+
+  chats.unshift(chat);
+
+  currentChatId = chat.id;
+
+  saveChats();
+
+  localStorage.setItem(
+    "mertAI_currentChat",
+    currentChatId
+  );
+
+  renderChatList();
+  renderMessages();
+}
+
+function deleteChat(id, event) {
+
+  event.stopPropagation();
+
+  chats = chats.filter(
+    chat => String(chat.id) !== String(id)
+  );
+
+  if (chats.length === 0) {
+
+    const chat = {
+      id: Date.now(),
+      title: "Yeni Sohbet",
+      messages: []
+    };
+
+    chats.push(chat);
   }
 
-});
+  currentChatId = chats[0].id;
 
-input.addEventListener("input", function() {
+  saveChats();
 
-  this.style.height = "auto";
-  this.style.height = Math.min(this.scrollHeight, 120) + "px";
+  localStorage.setItem(
+    "mertAI_currentChat",
+    currentChatId
+  );
 
-});
+  renderChatList();
+  renderMessages();
+}
 
-function addMessage(text, type) {
+function openChat(id) {
 
-  welcome.style.display = "none";
+  currentChatId = id;
 
-  const message = document.createElement("div");
-  message.className = "message " + type;
+  localStorage.setItem(
+    "mertAI_currentChat",
+    currentChatId
+  );
 
-  const bubble = document.createElement("div");
-  bubble.className = "bubble";
-  bubble.textContent = text;
+  renderChatList();
+  renderMessages();
+}
 
-  message.appendChild(bubble);
-  messages.appendChild(message);
+function renderChatList() {
 
-  messages.scrollTop = messages.scrollHeight;
+  const list =
+    document.getElementById("chatList");
+
+  list.innerHTML = "";
+
+  chats.forEach(chat => {
+
+    const item =
+      document.createElement("div");
+
+    item.className = "chat-item";
+
+    item.onclick = () =>
+      openChat(chat.id);
+
+    const title =
+      document.createElement("div");
+
+    title.className = "chat-title";
+
+    title.textContent =
+      chat.title || "Yeni Sohbet";
+
+    const del =
+      document.createElement("button");
+
+    del.className = "delete-chat";
+
+    del.textContent = "🗑️";
+
+    del.onclick = event =>
+      deleteChat(chat.id, event);
+
+    item.appendChild(title);
+    item.appendChild(del);
+
+    list.appendChild(item);
+  });
+}
+
+function renderMessages() {
+
+  const container =
+    document.getElementById("messages");
+
+  container.innerHTML = "";
+
+  const chat = getCurrentChat();
+
+  if (!chat) return;
+
+  if (chat.messages.length === 0) {
+
+    const empty =
+      document.createElement("div");
+
+    empty.className = "empty";
+
+    empty.textContent =
+      "Merhaba! Ben MERT AI 🤖";
+
+    container.appendChild(empty);
+
+    return;
+  }
+
+  chat.messages.forEach(message => {
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "message " +
+      (message.role === "user"
+        ? "user"
+        : "ai");
+
+    div.textContent =
+      message.content;
+
+    container.appendChild(div);
+  });
+
+  container.scrollTop =
+    container.scrollHeight;
 }
 
 async function sendMessage() {
 
-  const message = input.value.trim();
+  const input =
+    document.getElementById("messageInput");
+
+  const button =
+    document.getElementById("sendButton");
+
+  const message =
+    input.value.trim();
 
   if (!message) return;
 
-  addMessage(message, "user");
+  const chat = getCurrentChat();
+
+  if (!chat) return;
+
+  chat.messages.push({
+    role: "user",
+    content: message
+  });
+
+  if (
+    chat.title === "Yeni Sohbet"
+  ) {
+    chat.title =
+      message.slice(0, 25);
+  }
 
   input.value = "";
-  input.style.height = "auto";
 
-  typing.style.display = "block";
-  messages.appendChild(typing);
+  saveChats();
+  renderChatList();
+  renderMessages();
 
-  messages.scrollTop = messages.scrollHeight;
+  button.disabled = true;
+  button.textContent = "⏳";
 
   try {
 
-    const response = await fetch(WORKER_URL, {
+    const response =
+      await fetch(WORKER_URL, {
 
-      method: "POST",
+        method: "POST",
 
-      headers: {
-        "Content-Type": "application/json"
-      },
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
 
-      body: JSON.stringify({
-        message: message
-      })
+        body: JSON.stringify({
+          message: message
+        })
+      });
 
-    });
-
-    const data = await response.json();
-
-    typing.style.display = "none";
+    const data =
+      await response.json();
 
     if (data.answer) {
 
-      addMessage(data.answer, "ai");
+      chat.messages.push({
+        role: "assistant",
+        content: data.answer
+      });
 
     } else {
 
-      addMessage(
-        "Üzgünüm, şu anda cevap oluşturamadım.",
-        "ai"
-      );
-
+      chat.messages.push({
+        role: "assistant",
+        content:
+          "Üzgünüm, cevap oluşturulamadı."
+      });
     }
 
   } catch (error) {
 
-    typing.style.display = "none";
-
-    addMessage(
-      "MERT AI'ya bağlanırken bir sorun oluştu.",
-      "ai"
-    );
-
+    chat.messages.push({
+      role: "assistant",
+      content:
+        "Bağlantı hatası oluştu."
+    });
   }
 
+  saveChats();
+  renderMessages();
+
+  button.disabled = false;
+  button.textContent = "Gönder";
 }
+
+document
+  .getElementById("messageInput")
+  .addEventListener("keydown", function(event) {
+
+    if (event.key === "Enter") {
+      sendMessage();
+    }
+
+  });
+
+createFirstChat();
+renderChatList();
+renderMessages();
 
 </script>
 
 </body>
-<button onclick="newChat()">➕ Yeni Sohbet</button>
-  <style>
-body {
-  background: #000 !important;
-  color: #fff !important;
-}
-</style>
-<script>
-let chats = JSON.parse(localStorage.getItem("mertAI_chats") || "[]");
-
-function saveChats() {
-  localStorage.setItem("mertAI_chats", JSON.stringify(chats));
-}
- <script>
-function newChat() {
-  chats.push({
-    id: Date.now(),
-    title: "Yeni Sohbet",
-    messages: []
-  });
-
-  saveChats();
-  alert("Yeni sohbet oluşturuldu! 💬");
-}
-  <button onclick="newChat()">➕ Yeni Sohbet</button>
-</script> 
-</script>
 </html>
