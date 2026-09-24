@@ -484,5 +484,17 @@ let chats = JSON.parse(localStorage.getItem("mertAI_chats") || "[]");
 function saveChats() {
   localStorage.setItem("mertAI_chats", JSON.stringify(chats));
 }
+ <script>
+function newChat() {
+  chats.push({
+    id: Date.now(),
+    title: "Yeni Sohbet",
+    messages: []
+  });
+
+  saveChats();
+  alert("Yeni sohbet oluşturuldu! 💬");
+}
+</script> 
 </script>
 </html>
